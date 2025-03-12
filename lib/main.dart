@@ -1,3 +1,4 @@
+import 'package:ecommerce/common/bloc/button/button_state_cubit.dart';
 import 'package:ecommerce/core/configs/theme/app_theme.dart';
 import 'package:ecommerce/firebase_options.dart';
 import 'package:ecommerce/presentation/splash/bloc/splash_cubit.dart';
@@ -20,8 +21,11 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => SplashCubit()..appStarted(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (context) => SplashCubit()..appStarted()),
+        BlocProvider(create: (context) => ButtonStateCubit()),
+      ],
       child: MaterialApp(
         theme: AppTheme.appTheme,
         debugShowCheckedModeBanner: false,

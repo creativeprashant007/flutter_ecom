@@ -27,13 +27,15 @@ class GenderAndAgeSelectionPage extends StatelessWidget {
           BlocProvider(create: (context) => GenderSelectionCubit()),
           BlocProvider(create: (context) => AgeSelectionCubit()),
           BlocProvider(create: (context) => AgesDisplayCubit()),
-          BlocProvider(create: (context) => ButtonStateCubit()),
         ],
         child: BlocListener<ButtonStateCubit, ButtonState>(
           listener: (context, state) {
             if (state is ButtonFailureState) {
               var snackbar = SnackBar(
-                content: Text(state.errorMessage),
+                content: Text(
+                  state.errorMessage,
+                  style: TextStyle(color: Colors.white),
+                ),
                 behavior: SnackBarBehavior.floating,
               );
               ScaffoldMessenger.of(context).showSnackBar(snackbar);
