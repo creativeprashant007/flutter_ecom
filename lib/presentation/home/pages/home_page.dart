@@ -1,3 +1,8 @@
+import 'package:ecommerce/presentation/home/widgets/categories.dart';
+import 'package:ecommerce/presentation/home/widgets/header.dart';
+import 'package:ecommerce/presentation/home/widgets/new_in.dart';
+import 'package:ecommerce/presentation/home/widgets/search.dart';
+import 'package:ecommerce/presentation/home/widgets/top_selling.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatelessWidget {
@@ -5,6 +10,22 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold();
+    return Scaffold(
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Header(),
+            SizedBox(height: 24),
+            SearchField(),
+            SizedBox(height: 24),
+            CategoriesWidget(),
+            SizedBox(height: 24),
+            TopSelling(),
+            SizedBox(height: 24),
+            NewIn(),
+          ],
+        ),
+      ),
+    );
   }
 }

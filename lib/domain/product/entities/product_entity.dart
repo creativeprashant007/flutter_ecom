@@ -4,16 +4,17 @@ import 'color.dart';
 
 class ProductEntity {
   final String categoryId;
-  final List < ProductColorEntity > colors;
+  final List<ProductColorEntity> colors;
   final Timestamp createdDate;
   final num discountedPrice;
   final int gender;
-  final List < String > images;
+  final List<String> images;
   final num price;
-  final List < String > sizes;
+  final List<String> sizes;
   final String productId;
   final int salesNumber;
   final String title;
+  final String description;
 
   ProductEntity({
     required this.categoryId,
@@ -26,7 +27,7 @@ class ProductEntity {
     required this.sizes,
     required this.productId,
     required this.salesNumber,
-    required this.title
+    required this.title,
+    required this.description,
   });
-
 }

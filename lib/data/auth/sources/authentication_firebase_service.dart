@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dartz/dartz.dart';
 import 'package:ecommerce/data/auth/models/user_creation_req.dart';
 import 'package:ecommerce/data/auth/models/user_sign_in_req.dart';
+import 'package:ecommerce/domain/auth/entity/user.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 abstract class AuthenticationFirebaseService {
@@ -10,6 +11,7 @@ abstract class AuthenticationFirebaseService {
   Future<Either<String, String>> sendPasswordResetEmail(String email);
   Future<Either<String, List<QueryDocumentSnapshot>>> getAges();
   Future<bool> isLoggedIn();
+  Future<Either> getUser();
 }
 
 class AuthenticationFirebaseServiceImp extends AuthenticationFirebaseService {
@@ -31,6 +33,8 @@ class AuthenticationFirebaseServiceImp extends AuthenticationFirebaseService {
             'email': user.email,
             'gender': user.gender,
             'age': user.age,
+            'userId': returnedData.user!.uid,
+            'image': returnedData.user!.photoURL,
           });
 
       return const Right("Sign up was successful");
@@ -164,6 +168,31 @@ class AuthenticationFirebaseServiceImp extends AuthenticationFirebaseService {
       return true;
     } else {
       return false;
+    }
+  }
+
+  @override
+  Future<Either> getUser() async {
+    try {
+      var currentUser = FirebaseAuth.instance.currentUser;
+
+      if (currentUser == null) {
+        return const Left("No user is currently logged in.");
+      }
+
+      var userData = await FirebaseFirestore.instance
+          .collection("Users")
+          .doc(currentUser.uid)
+          .get()
+          .then((value) => value.data());
+
+      return Right(userData);
+    } on FirebaseAuthException catch (e) {
+      return Left("Authentication error: ${e.message}");
+    } on FirebaseException catch (e) {
+      return Left("Database error: ${e.message}");
+    } catch (e) {
+      return Left("An unexpected error occurred: ${e.toString()}");
     }
   }
 }
