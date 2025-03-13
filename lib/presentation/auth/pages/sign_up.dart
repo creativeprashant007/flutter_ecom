@@ -2,7 +2,6 @@ import 'package:ecommerce/common/helper/navigator/app_navigator.dart';
 import 'package:ecommerce/common/widgets/appbar/app_bar.dart';
 import 'package:ecommerce/common/widgets/button/basic_app_button.dart';
 import 'package:ecommerce/data/auth/models/user_creation_req.dart';
-import 'package:ecommerce/presentation/auth/pages/enter_password.dart';
 import 'package:ecommerce/presentation/auth/pages/gender_and_age_selection.dart';
 import 'package:ecommerce/presentation/auth/pages/sign_in_page.dart';
 import 'package:flutter/gestures.dart';
@@ -76,14 +75,14 @@ class SignUpPage extends StatelessWidget {
   Widget _firstNameField(BuildContext context) {
     return TextField(
       controller: _firstNameCon,
-      decoration: InputDecoration(hintText: "Enter First Name .."),
+      decoration: InputDecoration(hintText: "Enter First Name"),
     );
   }
 
   Widget _lastNameField(BuildContext context) {
     return TextField(
       controller: _lastNameCon,
-      decoration: InputDecoration(hintText: "Enter Last Name .."),
+      decoration: InputDecoration(hintText: "Enter Last Name "),
     );
   }
 
@@ -97,7 +96,7 @@ class SignUpPage extends StatelessWidget {
   Widget _passwordField(BuildContext context) {
     return TextField(
       controller: _passwordCon,
-      decoration: InputDecoration(hintText: "Enter Email"),
+      decoration: InputDecoration(hintText: "Enter Password"),
     );
   }
 

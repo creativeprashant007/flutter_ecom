@@ -15,4 +15,15 @@ class AppNavigator {
   static void push({required BuildContext context, required Widget widget}) {
     Navigator.push(context, MaterialPageRoute(builder: (c) => widget));
   }
+
+  static void pushAndRemove({
+    required BuildContext context,
+    required Widget widget,
+  }) {
+    Navigator.pushAndRemoveUntil(
+      context,
+      MaterialPageRoute(builder: (c) => widget),
+      (route) => false, // Removes all previous routes from the stack
+    );
+  }
 }

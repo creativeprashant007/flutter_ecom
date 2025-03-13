@@ -1,5 +1,9 @@
+import 'package:ecommerce/common/bloc/button/button_state_cubit.dart';
+import 'package:ecommerce/common/bloc/category/category_display_cubit.dart';
 import 'package:ecommerce/core/configs/theme/app_theme.dart';
 import 'package:ecommerce/firebase_options.dart';
+import 'package:ecommerce/presentation/product_detail/bloc/color_selection_cubit.dart';
+import 'package:ecommerce/presentation/product_detail/bloc/product_size_selection_cubit.dart';
 import 'package:ecommerce/presentation/splash/bloc/splash_cubit.dart';
 import 'package:ecommerce/presentation/splash/pages/splash.dart';
 import 'package:ecommerce/service_locator.dart';
@@ -20,8 +24,16 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => SplashCubit()..appStarted(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (context) => SplashCubit()..appStarted()),
+        BlocProvider(create: (context) => ButtonStateCubit()),
+        BlocProvider(
+          create: (context) => CategoriesDisplayCubit()..displayCategories(),
+        ),
+        BlocProvider(create: (context) => ProductColorSelectionCubit()),
+        BlocProvider(create: (context) => ProductSizeSelectionCubit()),
+      ],
       child: MaterialApp(
         theme: AppTheme.appTheme,
         debugShowCheckedModeBanner: false,

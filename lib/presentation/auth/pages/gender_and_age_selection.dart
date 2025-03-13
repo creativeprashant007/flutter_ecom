@@ -1,6 +1,7 @@
 import 'package:ecommerce/common/bloc/button/button_state.dart';
 import 'package:ecommerce/common/bloc/button/button_state_cubit.dart';
 import 'package:ecommerce/common/helper/bottomsheet/app_bottomsheet.dart';
+import 'package:ecommerce/common/helper/navigator/app_navigator.dart';
 import 'package:ecommerce/common/widgets/button/reactive_button.dart';
 import 'package:ecommerce/core/configs/theme/app_colors.dart';
 import 'package:ecommerce/data/auth/models/user_creation_req.dart';
@@ -8,6 +9,7 @@ import 'package:ecommerce/domain/auth/usecases/sign_up.dart';
 import 'package:ecommerce/presentation/auth/bloc/age_selection_cubit.dart';
 import 'package:ecommerce/presentation/auth/bloc/ages_display_cubit.dart';
 import 'package:ecommerce/presentation/auth/bloc/gender_selection_cubit.dart';
+import 'package:ecommerce/presentation/auth/pages/sign_in_page.dart';
 import 'package:ecommerce/presentation/auth/widgets/ages.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -27,16 +29,24 @@ class GenderAndAgeSelectionPage extends StatelessWidget {
           BlocProvider(create: (context) => GenderSelectionCubit()),
           BlocProvider(create: (context) => AgeSelectionCubit()),
           BlocProvider(create: (context) => AgesDisplayCubit()),
-          BlocProvider(create: (context) => ButtonStateCubit()),
         ],
         child: BlocListener<ButtonStateCubit, ButtonState>(
           listener: (context, state) {
             if (state is ButtonFailureState) {
               var snackbar = SnackBar(
-                content: Text(state.errorMessage),
+                content: Text(
+                  state.errorMessage,
+                  style: TextStyle(color: Colors.white),
+                ),
                 behavior: SnackBarBehavior.floating,
               );
               ScaffoldMessenger.of(context).showSnackBar(snackbar);
+            }
+            if (state is ButtonSuccessState) {
+              AppNavigator.pushAndRemove(
+                context: context,
+                widget: SignInPage(),
+              );
             }
           },
           child: Column(
